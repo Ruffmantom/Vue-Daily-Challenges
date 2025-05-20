@@ -27,6 +27,7 @@ I try to go beyond just getting it to "work" — I focus on:
 
 ## 📁 Folder Structure (Sample)
 
+```
 vue-daily-challenges/
 | | components/
 | ├── 01-challengeName/
@@ -35,6 +36,7 @@ vue-daily-challenges/
 │    └── README.md
 | ├── 02-challenge...
 |    └── ...
+```
 
 ---
 
