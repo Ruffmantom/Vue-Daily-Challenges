@@ -30,9 +30,9 @@ export default {
             type: String,
             required: false
         },
-        isOpen:{
-            type:Boolean,
-            required:true
+        isOpen: {
+            type: Boolean,
+            required: true
         }
     },
     data() {
@@ -41,7 +41,15 @@ export default {
 
         }
     },
+    beforeUnmount() {
+        document.removeEventListener('keydown', this.onKeydown);
+    },
     methods: {
+        onKeydown(e) {
+            if (e.key === 'Escape' && this.isOpen) {
+                this.handleClose();
+            }
+        },
         handleClose() {
             this.$emit('handle-click-close', { message: "Closing Modal" })
         },
@@ -57,13 +65,7 @@ export default {
         }
     },
     mounted() {
-        document.addEventListener('keydown', (e)=>{
-            if(e.key === 'Escape' && this.isOpen){
-                this.handleClose()
-            }else{
-                return
-            }
-        })
+        document.addEventListener('keydown', this.onKeydown);
     }
 }
 </script>

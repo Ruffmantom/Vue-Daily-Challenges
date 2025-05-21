@@ -2,7 +2,7 @@
   <div class="app min-h-screen flex flex-col relative">
 
     <!-- <Tabs></Tabs> -->
-    <Modal v-show="modalOpen" :isOpen="modalOpen" :width="'xl'" @handle-click-close="handleCloseModal"
+    <Modal v-if="modalOpen" :isOpen="modalOpen" :width="'xl'" @handle-click-close="handleCloseModal"
       :title="'This is a reusable modal!'">
       <p>Here is the content for the modal.</p>
     </Modal>
