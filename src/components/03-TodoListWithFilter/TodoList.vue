@@ -114,6 +114,20 @@ export default {
             } else {
                 this.viewableTodos = this.todoListItems
             }
+
+            /*
+            --------------------------------------------------------------------------
+            AI's Optimization
+            // make it an object
+            const filters = {
+                0: () => this.todoListItems,
+                1: () => this.todoListItems.filter(t => t.status === 1),
+                2: () => this.todoListItems.filter(t => t.status === 2)
+            };
+            // use like this
+            this.viewableTodos = filters[this.currentFilter]();
+            --------------------------------------------------------------------------
+            */
         },
         markTodoComplete(event) {
             // make todo complete in todo list
