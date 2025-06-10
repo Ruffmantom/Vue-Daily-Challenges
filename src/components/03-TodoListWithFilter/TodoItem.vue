@@ -9,15 +9,15 @@
         </div>
         <div class="flex gap-2 items-center justify-between w-full">
             <div class="flex gap-2 items-center">
-                <input type="checkbox" :checked="isChecked" @change="e => handleCompleteStatus(e)" name=""
-                    class="w-[20px] h-[20px]" id="">
+                <input type="checkbox" :checked="isChecked" @change="e => handleCompleteStatus(e, todoIdProp)" name=""
+                    class="w-[20px] h-[20px]">
                 <h1 class="dark:text-zinc-200">{{ title }}</h1>
             </div>
 
             <div class="flex gap-2 items-center">
-                <button v-if="status !== 2" v-on:click.prevent="handleToggleStatus(id, status)"
+                <button v-if="status !== 2" v-on:click.prevent="handleToggleStatus(todoIdProp, status)"
                     class="dark:text-zinc-200 w-[20px] h-[20px] rounded-xs flex items-center justify-center border-1 border-zinc-600 cursor-pointer hover:bg-yellow-300 hover:border-yellow-500 hover:text-yellow-600 ">◎</button>
-                <button v-on:click.prevent="handleDelete(id)"
+                <button v-on:click.prevent="handleDelete(todoIdProp)"
                     class="dark:text-zinc-200 w-[20px] h-[20px] rounded-xs flex items-center justify-center border-1 border-zinc-600 cursor-pointer hover:bg-red-300 hover:border-red-500 hover:text-red-600 ">×</button>
             </div>
         </div>
@@ -25,7 +25,6 @@
 </template>
 <script>
 import { formatDate } from '@/utils/helpers'
-import { ref } from 'vue'
 export default {
     name: 'TodoItem',
     props: {
@@ -33,7 +32,7 @@ export default {
             type: String,
             required: true
         },
-        id: {
+        todoIdProp: {
             type: String,
             required: true
         },
@@ -52,7 +51,7 @@ export default {
     },
     data() {
         return {
-            isChecked: ref(false),
+            isChecked: false,
             formattedDate: "",
         }
     },
@@ -67,14 +66,25 @@ export default {
 
     },
     methods: {
-        handleDelete(id) {
-            this.$emit('handle-delete-todo', { message: 'Deleting todo: ' + id, todoId: id })
+        handleDelete(passedId) {
+            this.$emit('handle-delete-todo', { 
+                message: 'Deleting todo: ' + passedId, 
+                todoId: passedId 
+            })
         },
-        handleToggleStatus(id, currentStatus) {
-            this.$emit('handle-toggle-status', { message: 'Changing status of todo: ' + id, todoId: id, currentStatus: currentStatus })
+        handleToggleStatus(passedId, currentStatus) {
+            this.$emit('handle-toggle-status', { 
+                message: 'Changing status of todo: ' + passedId, 
+                todoId: passedId, 
+                currentStatus: currentStatus 
+            })
         },
-        handleCompleteStatus(e, id) {
-            this.$emit('handle-complete', { message: 'completing todo: ' + id, todoId: id, isChecked: e.target.checked })
+        handleCompleteStatus(e, passedId) {
+            this.$emit('handle-complete', { 
+                message: `completing todo: ${passedId}`, 
+                todoId: passedId, 
+                isChecked: e.target.checked 
+            })
             this.isChecked = e.target.checked
         }
     }

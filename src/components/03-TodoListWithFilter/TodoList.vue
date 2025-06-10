@@ -24,9 +24,9 @@
         <div class="p-2 rounded-sm border-1 border-zinc-600 mt-2">
             <h4 class="dark:text-zinc-200">Todos</h4>
             <div class="pr-1 mt-1 max-h-[300px] overflow-y-auto">
-                <TodoItem v-for="todo of viewableTodos" :createdAt="todo.created_at" :key="todo.id" :id="todo.id"
-                    :status="todo.status" :filterStatus="currentFilter" :title="todo.title"
-                    @handle-delete-todo="deleteTodo" @handle-complete="markTodoComplete"></TodoItem>
+                <TodoItem v-for="todo of viewableTodos" :createdAt="todo.created_at" :key="todo.id"
+                    :todoIdProp="todo.id" :status="todo.status" :filterStatus="currentFilter" :title="todo.title"
+                    @handle-delete-todo="deleteTodo" @handle-complete="markTodoComplete" @handle-toggle-status="toggleTodoActive"></TodoItem>
                 <h1 v-if="viewableTodos.length === 0" class="dark:text-zinc-200">There are no Todos for this filter.
                 </h1>
             </div>
@@ -34,24 +34,22 @@
     </div>
 </template>
 <script>
-import FilterSearch from './FilterSearch.vue';
 import TodoItem from './TodoItem.vue';
 import { createCustomId, createTimeStamp } from '../../utils/helpers'
-import { ref } from 'vue';
+
 
 export default {
     name: "TodoList",
     components: {
-        TodoItem,
-        FilterSearch
+        TodoItem
     },
     data() {
         // Sets up reactive local state
         return {
-            todoTitle: ref(''),
-            currentFilter: ref(1),
+            todoTitle: '',
+            currentFilter: 1,
             filterKeys: ['All Tasks', 'Active', 'Completed'],
-            todoListItems: ref([
+            todoListItems: [
                 {
                     id: 'AASLKAGL2N24JLH3BGKJBWKJB',
                     title: 'Todo One',
@@ -70,8 +68,8 @@ export default {
                     status: 2,
                     created_at: 1749497593687
                 },
-            ]),
-            viewableTodos: ref([])
+            ],
+            viewableTodos: []
         }
     },
     methods: {
@@ -118,13 +116,17 @@ export default {
             }
         },
         markTodoComplete(event) {
-            console.log('about to mark a todo complete')
             // make todo complete in todo list
             let updatedTodos = this.todoListItems.map(t => {
                 if (t.id === event.todoId) {
-                    return { ...t, status: 2 };
+                    if (event.isChecked) {
+                        return { ...t, status: 2 };
+                    } else {
+                        return { ...t, status: 1 };
+                    }
                 }
-                return t;
+
+                return t
             })
 
             this.todoListItems = updatedTodos
@@ -134,13 +136,29 @@ export default {
 
         },
         toggleTodoActive(event) {
-            console.log('about to toggle active inactive state')
-            /*
+             /*
             Statuses
              - 0: inactive
              - 1: active
              - 2: complete
             */
+             // make todo complete in todo list
+            let updatedTodos = this.todoListItems.map(t => {
+                if (t.id === event.todoId) {
+                    if (event.currentStatus === 0) {
+                        return { ...t, status: 1 };
+                    } else {
+                        return { ...t, status: 0 };
+                    }
+                }
+
+                return t
+            })
+
+            this.todoListItems = updatedTodos
+            this.viewableTodos = updatedTodos
+            // filter
+            this.filterTodos()
         }
     },
     beforeMount() {
