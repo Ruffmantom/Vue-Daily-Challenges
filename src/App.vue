@@ -18,13 +18,17 @@
 
     </div> -->
     <!-- Filler content -->
-    <div class="p-3 max-w-xl">
+    <!-- <div class="p-3 max-w-xl">
 
       <div class=" dark:bg-zinc-900 rounded-xl p-4">
         <h1 class="dark:text-zinc-200">Todo List</h1>
         <TodoList></TodoList>
       </div>
 
+    </div> -->
+
+    <div class="p-3">
+      <EditorJsComponent></EditorJsComponent>
     </div>
 
   </div>
@@ -33,6 +37,7 @@
 import Tabs from "@/components/01-DynamicTabComponent/Tabs.vue";
 import Modal from "@/components/02-ReusableModalComponent/Modal.vue";
 import TodoList from "./components/03-TodoListWithFilter/TodoList.vue";
+import EditorJsComponent from "./components/04-EditorJsComponent/EditorJsComponent.vue";
 export default {
   name: "App",
   props: {
@@ -47,7 +52,8 @@ export default {
   components: {
     Tabs,
     Modal,
-    TodoList
+    TodoList,
+    EditorJsComponent
   },
   methods: {
     handleCloseModal(event) {
