@@ -27,7 +27,7 @@
 
     </div> -->
 
-    <div class="p-3">
+    <div class="p-3 grow flex overflow-y-auto">
       <EditorJsComponent></EditorJsComponent>
     </div>
 

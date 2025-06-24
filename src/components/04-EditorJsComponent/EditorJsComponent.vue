@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-zinc-50 p-4 border-1 border-zinc-200 rounded-md">
-        <p class="text-4xl text-zinc-700 font-medium">Editorjs Demo</p>
-        <div id="editorjs" class="mt-3">
-
+    <div class="bg-white p-4 border-1 border-zinc-200 rounded-md grow flex flex-col items-start justify-between">
+        <div class="flex flex-col w-full">
+            <p class="text-4xl text-zinc-700 font-medium">Editorjs Demo</p>
+            <div id="editorjs" class="mt-5 w-full"></div>
         </div>
         <button class="py-2 px-4 bg-white text-zinc-950 border-zinc-300 hover:bg-zinc-300 rounded-sm "
             @click.prevent="handleSaveData">Save</button>
